@@ -7,8 +7,24 @@ import QRCodeCanvas from './QRCodeCanvas';
 
 function App() {
 
+  const { setNome, setEmail, setNumero} = React.useContext(IndexContext);
 
-  const { text, setText, nome, setNome, email, setEmail, numero, setNumero, rua, setRua, cidade, setCidade, estado, setEstado, cep, setCep, pais, setPais } = React.useContext(IndexContext);
+  // function pdf() {
+  //   var dados = document.getElementById('dados').innerHTML;
+
+  //   var janela = window.open('' , '' , 'width=800,height=600');
+  //   janela.document.write('<html><head>');
+  //   janela.document.write('<title>PDF</title></head>');
+  //   janela.document.write('<body>');
+  //   janela.document.write(dados);
+  //   janela.document.write('</body></html>');
+  //   janela.document.close();
+  //   janela.print()
+
+
+
+
+  // }
 
   var nomeQR,
   element =  document.getElementById("nome")
@@ -40,104 +56,42 @@ function App() {
     numeroQR = null
   }
 
-  // var ruaQR,
-  // element4 = document.getElementById("rua")
-
-  // if(element4 != null) {
-  //   ruaQR = element4.value;
-  // }
-  // else {
-  //   ruaQR = null
-  // }
-
-  // var cidadeQR,
-  // element5 = document.getElementById("cidade")
-
-  // if(element5 != null) {
-  //   cidadeQR = element5.value;
-  // }
-  // else {
-  //   cidadeQR = null
-  // }
-
-  // var estadoQR,
-  // element6 = document.getElementById("estado")
-
-  // if(element6 != null) {
-  //   estadoQR = element6.value;
-  // }
-  // else {
-  //   estadoQR = null
-  // }
-
-  // var cepQR,
-  // element7 = document.getElementById("cep")
-
-  // if(element3 != null) {
-  //   cepQR = element7.value;
-  // }
-  // else {
-  //   cepQR = null
-  // }
-
-  // var paisQR,
-  // element8 = document.getElementById("pais")
-
-  // if(element8 != null) {
-  //   paisQR = element8.value;
-  // }
-  // else {
-  //   paisQR = null
-  // }
-
-  var vcard = null
-
   var vcard_begin = 'BEGIN:VCARD\nVERSION:3.0\n';
-	var vcard_end = 'END:VCARD;';
 	
+  var vcard_end = 'END:VCARD;';
 	
 	var nomeV = 'FN:' + nomeQR + '\n';
 	
+  var nV = 'N:' + ";" + nomeQR + ";"  + '\n';
+
 	var emailV = 'EMAIL:'+ emailQR + '\n';
 	
 	var telefoneV = 'TEL;TYPE=CELL:' + numeroQR + '\n';
 
-  // var adr = "ADR;CHARSET=UTF-8;TYPE=HOME:;;" + ruaQR + ";" + cidadeQR + ";" + estadoQR + ";" + cepQR + ";" + paisQR + '\n'
+  var orgV = 'ORG:' + "Arcom" + '\n';
 
-  var vcard = vcard_begin+nomeV+emailV+telefoneV+vcard_end;
+  var urlV = 'URL;TYPE=WORK:' + "https://www.arcom.com.br" + '\n';
+
+  var roleV = 'ROLE:' + "Analista" + '\n';
+
+  var adrV = "ADR;TYPE=WORK:" + "Arcom - Anel Viario Ayrton Senna, 2001 - Distrito Industrial, Uberlandia - MG, 38402-329" + '\n'
+
+  var vcard = vcard_begin+nomeV+nV+emailV+telefoneV+orgV+adrV+urlV+vcard_end;
 
 
   console.log(vcard)
 
   return (
-    <div className="index">
-      <div className="divall">
-          <div className="divInput">
-              <input className="input" id="nome" placeholder="Nome" onChange={(element) => setNome(element.target.value)}></input>
-              <input className="input" id="email" placeholder="Email" onChange={(element) => setEmail(element.target.value)}></input>
-              <input className="input" id="telefone" placeholder="Celular" onChange={(element) => setNumero(element.target.value)}></input>
-          </div>
-              {/* <input id="rua" placeholder="Rua" onChange={(element) => setRua(element.target.value)}></input>
-              <input id="cidade" placeholder="Cidade" onChange={(element) => setCidade(element.target.value)}></input>
-              <input id="estado" placeholder="Estado" onChange={(element) => setEstado(element.target.value)}></input>
-              <input id="cep" placeholder="CEP" onChange={(element) => setCep(element.target.value)}></input>
-              <input id="pais" placeholder="País" onChange={(element) => setPais(element.target.value)}></input> */}
-
-          <div>
-          <div className="divValues">
-              <input value={nomeQR}></input>
-              <input value={emailQR}></input>
-              <input value={numeroQR}></input>
-          </div>
-
-          <div className="qrcodediv">
-              <QRCodeCanvas text={vcard}></QRCodeCanvas>
-          </div>
-          </div>
-    </div>
-
-        
-    
+    <div className="QRCodeDivAll">
+        <div className="QRCodeDivInput">
+            <input className="QRCodeInput" id="nome" placeholder="Nome" onChange={(element) => setNome(element.target.value)}></input>
+            <input className="QRCodeInput" id="email" placeholder="Email" onChange={(element) => setEmail(element.target.value)}></input>
+            <input className="QRCodeInput" id="telefone" placeholder="Celular" onChange={(element) => setNumero(element.target.value)}></input>
+        </div>
+        <div id="dados" className="QRCodeDiv">
+            <h1>{nomeQR}</h1>
+            <QRCodeCanvas text={vcard}></QRCodeCanvas>
+        </div>
     </div>
   );
 }
