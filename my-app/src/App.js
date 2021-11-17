@@ -1,30 +1,12 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
 import {IndexContext} from '../src/context/index'
 import QRCodeCanvas from './QRCodeCanvas';
-
-
+import {ReactComponent as DownloadSVG} from './SVGs/download.svg'
 
 function App() {
 
   const { setNome, setEmail, setNumero} = React.useContext(IndexContext);
-
-  // function pdf() {
-  //   var dados = document.getElementById('dados').innerHTML;
-
-  //   var janela = window.open('' , '' , 'width=800,height=600');
-  //   janela.document.write('<html><head>');
-  //   janela.document.write('<title>PDF</title></head>');
-  //   janela.document.write('<body>');
-  //   janela.document.write(dados);
-  //   janela.document.write('</body></html>');
-  //   janela.document.close();
-  //   janela.print()
-
-
-
-
-  // }
 
   var nomeQR,
   element =  document.getElementById("nome")
@@ -78,19 +60,33 @@ function App() {
 
   var vcard = vcard_begin+nomeV+nV+emailV+telefoneV+orgV+adrV+urlV+vcard_end;
 
-
   console.log(vcard)
+
+  function downloadPDF(){    
+    var link = document.createElement('a')
+    link.download = 'qrcode.png'
+    link.href = document.getElementById("canvas").toDataURL()
+    link.click()
+  }
 
   return (
     <div className="QRCodeDivAll">
         <div className="QRCodeDivInput">
             <input className="QRCodeInput" id="nome" placeholder="Nome" onChange={(element) => setNome(element.target.value)}></input>
-            <input className="QRCodeInput" id="email" placeholder="Email" onChange={(element) => setEmail(element.target.value)}></input>
-            <input className="QRCodeInput" id="telefone" placeholder="Celular" onChange={(element) => setNumero(element.target.value)}></input>
+            <input className="QRCodeInput" type="email" id="email" placeholder="Email" onChange={(element) => setEmail(element.target.value)}></input>
+            <input className="QRCodeInput" type="number" placeholderid="telefone" placeholder="Celular" onChange={(element) => setNumero(element.target.value)}></input>
         </div>
-        <div id="dados" className="QRCodeDiv">
-            <h1>{nomeQR}</h1>
-            <QRCodeCanvas text={vcard}></QRCodeCanvas>
+        <div className="QRCodeDivContainerPai">
+          <div className="QRCodeDivContainer">
+            <div id="dados" className="QRCodeDiv">
+                <h1 className="QRCodeNome">{nomeQR || "Seu Nome"}</h1>
+                <QRCodeCanvas text={vcard}></QRCodeCanvas>
+            </div>
+            <button onClick={downloadPDF}>
+              DOWNLOAD
+              <DownloadSVG/>
+            </button>
+          </div>
         </div>
     </div>
   );
