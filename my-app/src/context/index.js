@@ -9,11 +9,56 @@ export default function IndexProvider({ children }) {
     const [email, setEmail] = useState(localStorage.getItem('email'))
     const [numero, setNumero] = useState(localStorage.getItem('numero'))
 
-    var nomeLocal = localStorage.setItem('nome', nome)
+    localStorage.setItem('nome', nome)
+    localStorage.setItem('email', email)
+    localStorage.setItem('numero', numero)
 
-    var emailLocal = localStorage.setItem('email', email)
+    var nomeQR,
+    element =  document.getElementById("QRNome")
+    if(element != null) {
+      nomeQR = element.value;
+    }
+    else {
+      nomeQR = null;
+    }
 
-    var numeroLocal = localStorage.setItem('numero', numero)
+    var emailQR,
+    element2 = document.getElementById("QREmail")
+    if(element2 != null) {
+      emailQR = element2.value;
+    }
+    else {
+      emailQR = null
+    }
+
+    var numeroQR,
+    element3 = document.getElementById("QRNumero")
+    if(element3 != null) {
+      numeroQR = element3.value;
+    }
+    else {
+      numeroQR = null
+    }
+
+    var vcard_begin = 'BEGIN:VCARD\nVERSION:3.0\n';
+    
+    var vcard_end = 'END:VCARD;';
+    
+    var nomeV = 'FN:' + nomeQR + '\n';
+    
+    var nV = 'N:' + ";" + nomeQR + ";"  + '\n';
+
+    var emailV = 'EMAIL:'+ emailQR + '\n';
+    
+    var telefoneV = 'TEL;TYPE=CELL:' + numeroQR + '\n';
+
+    var orgV = 'ORG:' + "Arcom" + '\n';
+
+    var urlV = 'URL;TYPE=WORK:' + "https://www.arcom.com.br" + '\n';
+
+    var adrV = "ADR;TYPE=WORK:" + "Arcom - Anel Viario Ayrton Senna, 2001 - Distrito Industrial, Uberlandia - MG, 38402-329" + '\n'
+
+    var vcard = vcard_begin+nomeV+nV+emailV+telefoneV+orgV+adrV+urlV+vcard_end;
 
     function handleSave() {
       var node = document.getElementById('dados');
@@ -30,7 +75,7 @@ export default function IndexProvider({ children }) {
       });
     }
 
-return (<IndexContext.Provider value={{text, setText, nome, setNome, email, setEmail, numero, setNumero, handleSave, nomeLocal, emailLocal, numeroLocal}}>
+return (<IndexContext.Provider value={{text, setText, nome, setNome, email, setEmail, numero, setNumero, handleSave, vcard}}>
     {children}
   </IndexContext.Provider>);
 }
