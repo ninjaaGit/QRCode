@@ -188,14 +188,17 @@ html, body, #root {
   background: #fff;
   box-shadow:  20px 20px 60px #bebebe,
   -20px -20px 60px #ffffff;
+  & > svg{
+    width: 36%;
+    margin-bottom: 5rem;
+  }
 }
 
 .QRCodeInput {
-  width: 50rem;
+  width: 70%;
   padding: .5rem;
   font-size: 1rem;
   border: none;
-  max-width: fit-content;
   transition: 200ms;
   border-bottom: solid 2px #bebebe80;
   border-radius: .3rem .3rem 0 0;
@@ -210,4 +213,43 @@ html, body, #root {
   display: flex;
   flex-direction: column;
   border: 0;
+}
+@media only screen and (max-width:768px) {
+  .QRCodeDivAll {
+    box-sizing: border-box;
+    flex-direction: column;
+  }
+  .QRCodeDivInput {
+    padding-top:4rem;
+    padding-bottom: 4rem;
+    width: 100%;
+    box-sizing: border-box
+  }
+  .QRCodeDivContainerPai {
+    margin-top: 5rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .QRCodeDivContainer {
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: none;
+    margin-bottom: 2rem;
+    &:hover{
+      box-shadow:  none;
+    }
+  }
+  .QRCodeDiv {
+    box-sizing: border-box;
+    width: 100%;
+  }
+  #canvas {
+    width:100% !important;
+    height:auto !important;
+  }
+  .QRInput {
+    &:focus{
+      border-bottom: none;
+    }
+  }
 }

@@ -2,15 +2,17 @@ import React from 'react';
 import './App.scss';
 import {IndexContext} from '../src/context/index'
 import QRCodeCanvas from './QRCodeCanvas';
+import Input from '@mui/material/Input';
+import Button from '@mui/material/Button';
 import {ReactComponent as DownloadSVG} from './SVGs/download.svg'
+import {ReactComponent as LogoSVG} from './SVGs/logo.svg'
 
 function App() {
 
-  const { setNome, setEmail, setNumero} = React.useContext(IndexContext);
+  const { setNome, setEmail, setNumero, handleSave, nomeLocal, emailLocal, numeroLocal} = React.useContext(IndexContext);
 
   var nomeQR,
   element =  document.getElementById("nome")
-
   if(element != null) {
     nomeQR = element.value;
   }
@@ -20,7 +22,6 @@ function App() {
 
   var emailQR,
   element2 = document.getElementById("email")
-
   if(element2 != null) {
     emailQR = element2.value;
   }
@@ -30,7 +31,6 @@ function App() {
 
   var numeroQR,
   element3 = document.getElementById("telefone")
-
   if(element3 != null) {
     numeroQR = element3.value;
   }
@@ -62,30 +62,24 @@ function App() {
 
   console.log(vcard)
 
-  function downloadPDF(){    
-    var link = document.createElement('a')
-    link.download = 'qrcode.png'
-    link.href = document.getElementById("canvas").toDataURL()
-    link.click()
-  }
-
   return (
     <div className="QRCodeDivAll">
         <div className="QRCodeDivInput">
-            <input className="QRCodeInput" id="nome" placeholder="Nome" onChange={(element) => setNome(element.target.value)}></input>
-            <input className="QRCodeInput" type="email" id="email" placeholder="Email" onChange={(element) => setEmail(element.target.value)}></input>
-            <input className="QRCodeInput" type="number" placeholderid="telefone" placeholder="Celular" onChange={(element) => setNumero(element.target.value)}></input>
+            <LogoSVG/>
+            <Input color="success" className="QRCodeInput" value={localStorage.getItem('nome')} id="nome" placeholder="Nome" onChange={(element) => setNome(element.target.value)}></Input>
+            <Input color="success" className="QRCodeInput" value={localStorage.getItem('email')} type="email" id="email" placeholder="Email" onChange={(element) => setEmail(element.target.value)}></Input>
+            <Input color="success" className="QRCodeInput" value={localStorage.getItem('numero')} type="number" placeholderid="telefone" placeholder="Celular" onChange={(element) => setNumero(element.target.value)}></Input>
         </div>
         <div className="QRCodeDivContainerPai">
           <div className="QRCodeDivContainer">
             <div id="dados" className="QRCodeDiv">
-                <h1 className="QRCodeNome">{nomeQR || "Seu Nome"}</h1>
+                <h1 className="QRCodeNome">{localStorage.getItem('nome') || "Seu Nome"}</h1>
                 <QRCodeCanvas text={vcard}></QRCodeCanvas>
             </div>
-            <button onClick={downloadPDF}>
+            <Button color="success" onClick={handleSave}>
               DOWNLOAD
               <DownloadSVG/>
-            </button>
+            </Button>
           </div>
         </div>
     </div>

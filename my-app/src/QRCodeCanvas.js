@@ -3,12 +3,7 @@ import {IndexContext} from '../src/context/index'
 import QRCode from "qrcode";
 
 export default function QRCodeCanvas({text}) {
-    const canvasRef = useRef()
-    const canvasText = useRef()
-
-    const { nome, setEmail, setNumero} = React.useContext(IndexContext);
-
-    
+    const canvasRef = useRef()    
 
     useEffect(() => {
         QRCode.toCanvas(canvasRef.current, text,{width: 300}, (error) => {
