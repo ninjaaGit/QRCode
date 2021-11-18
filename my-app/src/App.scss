@@ -195,8 +195,9 @@ html, body, #root {
 }
 
 .QRCodeImage {
-  width: 25%;
+  width: 30%;
   align-self: center;
+  margin-bottom: 25px;
 }
 
 .QRCodeInput {
@@ -225,8 +226,9 @@ html, body, #root {
     flex-direction: column;
   }
   .QRCodeImage {
-    width: 25%;
+    width: 30%;
     align-self: center;
+    margin-bottom: 25px;
   }
   .QRCodeDivInput {
     padding-top:4rem;

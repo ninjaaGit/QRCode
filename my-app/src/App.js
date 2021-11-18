@@ -23,8 +23,8 @@ function App() {
           <div className="QRCodeDivContainer">
             <div id="dados" className="QRCodeDiv">
                 <LogoSVG className="QRCodeImage"/>
-                <h1 className="QRCodeNome">{localStorage.getItem('nome') || "Seu Nome"}</h1>
                 <QRCodeCanvas text={vcard}></QRCodeCanvas>
+                <h1 className="QRCodeNome">{localStorage.getItem('nome') || "Seu Nome"}</h1>
             </div>
             <Button color="success" onClick={handleSave}>
               DOWNLOAD
